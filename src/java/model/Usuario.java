@@ -5,7 +5,7 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
-    private int quantiaUsuario;
+    private double quantiaUsuario;
 
     public Usuario() {}
 
