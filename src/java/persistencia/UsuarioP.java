@@ -18,7 +18,7 @@ public class UsuarioP {
             stm.setString(1, usuario.getNome());
             stm.setString(2, usuario.getEmail());
             stm.setString(3, usuario.getSenha());
-            stm.setInt(4, usuario.getQuantiaUsuario());
+            stm.setDouble(4, usuario.getQuantiaUsuario());
             
             stm.executeUpdate();
             return true;
@@ -50,7 +50,7 @@ public class UsuarioP {
                     usuario.setNome(rs.getString("nome"));
                     usuario.setEmail(rs.getString("email"));
                     usuario.setSenha(rs.getString("senha"));
-                    usuario.setQuantiaUsuario(rs.getInt("quantiaUsuario")); // <-- ADICIONADO AQUI
+                    usuario.setQuantiaUsuario(rs.getDouble("quantiaUsuario")); 
                 }
             }
         } 
@@ -60,5 +60,25 @@ public class UsuarioP {
         }
         
         return usuario;
+    }
+
+    public boolean atualizarQuantia(int idUsuario, double novaQuantia) 
+    {
+        String sql = "UPDATE usuario SET quantiaUsuario = ? WHERE id = ?";
+        
+        try (Connection con = ConexaoDB.conectar();
+             PreparedStatement stm = con.prepareStatement(sql)) 
+        {
+            stm.setDouble(1, novaQuantia);
+            stm.setInt(2, idUsuario);
+            
+            stm.executeUpdate();
+            return true;
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

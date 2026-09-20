@@ -48,12 +48,12 @@ public class Usuario {
         this.senha = senha; 
     }
     
-    public int getQuantiaUsuario ()
+    public double getQuantiaUsuario ()
     {
         return quantiaUsuario;
     }
     
-    public void setQuantiaUsuario (int quantiaUsuario)
+    public void setQuantiaUsuario (double quantiaUsuario)
     {
         this.quantiaUsuario = quantiaUsuario;
     }

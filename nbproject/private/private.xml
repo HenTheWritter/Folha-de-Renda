@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/negocio/UsuarioNegocio.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/negocio/GastoNegocio.java</file>
             <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/persistencia/UsuarioP.java</file>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/model/MetaEconomia.java</file>
             <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/model/Usuario.java</file>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/MetaController.java</file>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/persistencia/MetaEconomiaP.java</file>
         </group>
     </open-files>
 </project-private>
