@@ -25,7 +25,7 @@ public class GastoController extends HttpServlet {
         {
             String descricao = request.getParameter("descricao");
             double valor = Double.parseDouble(request.getParameter("valor"));
-            Date dataGasto = Date.valueOf(request.getParameter("dataGasto")); // Formato AAAA-MM-DD
+            Date dataGasto = Date.valueOf(request.getParameter("dataGasto")); 
             
             Gasto gasto = new Gasto();
             gasto.setIdUsuario(usuario.getId());
@@ -38,12 +38,12 @@ public class GastoController extends HttpServlet {
             try 
             {
                 negocio.registrarNovoGasto(usuario, gasto);
-                response.sendRedirect("dashboard.jsp?sucesso=true");
+                response.sendRedirect("menu.jsp?sucesso=true");
             } 
             catch (Exception e) 
             {
                 request.setAttribute("mensagemErro", e.getMessage());
-                request.getRequestDispatcher("dashboard.jsp").forward(request, response);
+                request.getRequestDispatcher("menu.jsp").forward(request, response);
             }
         } 
         else 

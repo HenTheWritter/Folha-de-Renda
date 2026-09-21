@@ -21,7 +21,6 @@ public class AmizadeController extends HttpServlet {
         
         if (usuario != null) 
         {
-            // O ecrã envia o ID do amigo que o utilizador quer adicionar
             int idAmigo = Integer.parseInt(request.getParameter("idAmigo"));
             
             AmizadeP amizadeP = new AmizadeP();

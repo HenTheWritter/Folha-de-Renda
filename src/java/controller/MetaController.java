@@ -35,7 +35,7 @@ public class MetaController extends HttpServlet {
             MetaEconomiaP persistencia = new MetaEconomiaP();
             persistencia.salvar(meta);
             
-            response.sendRedirect("dashboard.jsp?sucesso=true");
+            response.sendRedirect("menu.jsp?sucesso=true");
         } 
         else 
         {
