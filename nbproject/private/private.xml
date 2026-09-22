@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/negocio/GastoNegocio.java</file>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/persistencia/UsuarioP.java</file>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/model/Usuario.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/UsuarioController.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/negocio/MetaEconomiaNegocio.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/menu.jsp</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/index.html</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/GastoController.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/GrupoController.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/AmizadeController.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/persistencia/MetaEconomiaP.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/MetaController.java</file>
         </group>
     </open-files>
 </project-private>

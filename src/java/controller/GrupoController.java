@@ -15,8 +15,8 @@ public class GrupoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
-        String nome = request.getParameter("nome");
-        String descricao = request.getParameter("descricao");
+        String nome = request.getParameter("nome").trim();
+        String descricao = request.getParameter("descricao").trim();
         
         Grupo grupo = new Grupo();
         grupo.setNome(nome);

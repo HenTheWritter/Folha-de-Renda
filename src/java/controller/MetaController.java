@@ -22,7 +22,7 @@ public class MetaController extends HttpServlet {
         
         if (usuario != null) 
         {
-            String descricao = request.getParameter("descricao");
+            String descricao = request.getParameter("descricao").trim();
             double valorObjetivo = Double.parseDouble(request.getParameter("valorObjetivo"));
             double valorPoupado = Double.parseDouble(request.getParameter("valorPoupado"));
             

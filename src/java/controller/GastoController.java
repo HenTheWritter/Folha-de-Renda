@@ -23,7 +23,7 @@ public class GastoController extends HttpServlet {
         
         if (usuario != null) 
         {
-            String descricao = request.getParameter("descricao");
+            String descricao = request.getParameter("descricao").trim();
             double valor = Double.parseDouble(request.getParameter("valor"));
             Date dataGasto = Date.valueOf(request.getParameter("dataGasto")); 
             
