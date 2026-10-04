@@ -1,62 +1,31 @@
 package model;
 
-public class Usuario {
+import java.io.Serializable;
+import java.math.BigDecimal;
+
+public class Usuario implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id;
     private String nome;
     private String email;
-    private String senha;
-    private double quantiaUsuario;
+    private String senha; // hash; nunca é guardado na sessão
+    private BigDecimal quantiaUsuario = BigDecimal.ZERO;
 
     public Usuario() {}
 
-    public int getId() 
-    { 
-        return id; 
-    }
-    
-    public void setId(int id) 
-    { 
-        this.id = id; 
-    }
-    
-    public String getNome() 
-    { 
-        return nome; 
-    }
-    public void setNome(String nome) 
-    { 
-        this.nome = nome; 
-    }
-    
-    public String getEmail() 
-    { 
-        return email; 
-    }
-    
-    public void setEmail(String email) 
-    { 
-        this.email = email; 
-    }
-    
-    public String getSenha() 
-    { 
-        return senha; 
-    }
-    
-    public void setSenha(String senha) 
-    { 
-        this.senha = senha; 
-    }
-    
-    public double getQuantiaUsuario ()
-    {
-        return quantiaUsuario;
-    }
-    
-    public void setQuantiaUsuario (double quantiaUsuario)
-    {
-        this.quantiaUsuario = quantiaUsuario;
-    }
-    
-    
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+
+    public BigDecimal getQuantiaUsuario() { return quantiaUsuario; }
+    public void setQuantiaUsuario(BigDecimal quantiaUsuario) { this.quantiaUsuario = quantiaUsuario; }
 }

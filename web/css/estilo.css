@@ -1,0 +1,55 @@
+/* Estilo das páginas internas (painel, amigos, grupos, erro). Mesma identidade de login/cadastro. */
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #f4f4f9; color: #333; }
+
+.navbar { background-color: #121212; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 30px; min-height: 70px; border-bottom: 4px solid #4CAF50; flex-wrap: wrap; }
+.nav-logo { color: #4CAF50; font-size: 24px; font-weight: bold; letter-spacing: 2px; text-decoration: none; }
+.nav-links { display: flex; gap: 30px; flex-wrap: wrap; }
+.nav-links a { color: #fff; text-decoration: none; font-size: 17px; font-weight: 300; padding: 6px 0; border-bottom: 2px solid transparent; transition: color 0.3s; }
+.nav-links a:hover { color: #4CAF50; }
+.nav-links a.ativo { color: #4CAF50; border-bottom-color: #4CAF50; }
+.nav-user { display: flex; align-items: center; gap: 14px; color: #fff; font-size: 15px; }
+.nav-user form { margin: 0; }
+.btn-sair { background: transparent; color: #fff; border: 1px solid #777; border-radius: 4px; padding: 7px 14px; font-size: 14px; cursor: pointer; width: auto; }
+.btn-sair:hover { border-color: #FFC107; color: #FFC107; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid #FFC107; outline-offset: 2px; }
+
+.pagina { max-width: 1100px; margin: 0 auto; padding: 24px 20px 50px; }
+.saldo { background: #fff; border-left: 6px solid #4CAF50; border-radius: 8px; padding: 22px 26px; margin-bottom: 22px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); }
+.saldo small { display: block; color: #666; font-size: 14px; margin-bottom: 4px; }
+.saldo strong { font-size: 34px; color: #121212; }
+.saldo strong.negativo { color: #c62828; }
+h1 { font-size: 24px; margin-bottom: 18px; color: #121212; }
+
+.grade { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.card { background: #fff; padding: 22px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); flex: 1; min-width: 280px; border-top: 4px solid #4CAF50; }
+.card.amarelo { border-top-color: #FFC107; }
+.card h2 { font-size: 18px; margin-bottom: 14px; color: #121212; }
+label { display: block; font-size: 14px; font-weight: bold; color: #555; margin-bottom: 4px; }
+input[type=text], input[type=email], input[type=number], input[type=date] { width: 100%; padding: 10px; margin-bottom: 14px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+input:focus { outline: none; border-color: #4CAF50; }
+.btn { width: 100%; padding: 11px; border: none; border-radius: 4px; font-size: 15px; font-weight: bold; cursor: pointer; background: #4CAF50; color: #fff; transition: background 0.3s; }
+.btn:hover { background: #388E3C; }
+.btn.amarelo { background: #FFC107; color: #333; }
+.btn.amarelo:hover { background: #FFA000; }
+
+.alerta { padding: 12px 14px; border-radius: 4px; margin-bottom: 18px; font-size: 14px; }
+.alerta.erro { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+.alerta.ok { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 9px 6px; border-bottom: 1px solid #eee; }
+th { color: #666; font-weight: 600; }
+td.valor, th.valor { text-align: right; white-space: nowrap; }
+.vazio { color: #777; font-size: 14px; padding: 6px 0; }
+.lista-simples { list-style: none; }
+.lista-simples li { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+.lista-simples small { display: block; color: #777; }
+
+.meta { padding: 10px 0; border-bottom: 1px solid #eee; }
+.meta-topo { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; margin-bottom: 6px; }
+.barra { background: #e8e8e8; border-radius: 6px; height: 10px; overflow: hidden; }
+.barra > span { display: block; height: 100%; background: #4CAF50; }
+.meta small { color: #666; font-size: 13px; }
+
+@media (max-width: 600px) { .navbar { padding: 10px 16px; } .nav-links { gap: 18px; } }

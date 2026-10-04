@@ -1,52 +1,55 @@
 package negocio;
 
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Logger;
 import model.Gasto;
 import model.Usuario;
 import persistencia.GastoP;
 import persistencia.UsuarioP;
 
 public class GastoNegocio {
-    
-    private GastoP gastoP = new GastoP();
-    private UsuarioP usuarioP = new UsuarioP();
 
-    public boolean registrarNovoGasto(Usuario usuario, Gasto gasto) throws Exception 
-    {
-        if (gasto.getValor() <= 0) 
-        {
-            throw new Exception("O valor do gasto deve ser maior que zero.");
-        }
-        
-        if (usuario.getQuantiaUsuario() < gasto.getValor()) 
-        {
-            throw new Exception("Saldo insuficiente para este gasto.");
-        }
+    private static final Logger LOG = Logger.getLogger(GastoNegocio.class.getName());
 
-        boolean gastoSalvo = gastoP.salvar(gasto);
-        
-        if (gastoSalvo) 
-        {
-            double novoSaldo = usuario.getQuantiaUsuario() - (int) gasto.getValor();
-            
-            usuario.setQuantiaUsuario(novoSaldo);
-            
-            return usuarioP.atualizarQuantia(usuario.getId(), novoSaldo);
+    private final GastoP gastoP = new GastoP();
+    private final UsuarioP usuarioP = new UsuarioP();
+
+    public void registrarNovoGasto(Usuario usuario, Gasto gasto) throws NegocioException {
+        gasto.setDescricao(Regras.texto(gasto.getDescricao(), "a descrição do gasto", true));
+        gasto.setValor(Regras.dinheiro(gasto.getValor(), "gasto", false));
+        if (gasto.getDataGasto() == null) {
+            throw new NegocioException("Informe a data do gasto.");
         }
-        
-        return false;
+        gasto.setIdUsuario(usuario.getId());
+
+        try {
+            if (!gastoP.registrarComDebito(gasto)) {
+                throw new NegocioException("Saldo insuficiente para este gasto.");
+            }
+            usuario.setQuantiaUsuario(usuarioP.buscarSaldo(usuario.getId()));
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
     }
-    
-    public boolean adicionarRenda(Usuario usuario, int valorRenda) throws Exception 
-    {
-        if (valorRenda <= 0) 
-        {
-            throw new Exception("A renda adicionada deve ser maior que zero.");
+
+    public void adicionarRenda(Usuario usuario, BigDecimal valorRenda) throws NegocioException {
+        BigDecimal valor = Regras.dinheiro(valorRenda, "renda", false);
+
+        try {
+            usuarioP.creditar(usuario.getId(), valor);
+            usuario.setQuantiaUsuario(usuarioP.buscarSaldo(usuario.getId()));
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
         }
-        
-        double novoSaldo = usuario.getQuantiaUsuario() + valorRenda;
-        
-        usuario.setQuantiaUsuario(novoSaldo);
-        
-        return usuarioP.atualizarQuantia(usuario.getId(), novoSaldo);
+    }
+
+    public List<Gasto> listarRecentes(Usuario usuario, int limite) throws NegocioException {
+        try {
+            return gastoP.listarRecentes(usuario.getId(), limite);
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
     }
 }

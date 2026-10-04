@@ -2,47 +2,92 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Folha de Renda</title>
+    <title>Folha de Renda - Início</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background-color: #f4f4f9; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0; 
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #ffffff; }
+
+        /* Barra superior escura baseada na referência visual */
+        .navbar {
+            background-color: #121212; 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            height: 70px;
+            border-bottom: 4px solid #4CAF50; /* Detalhe verde */
         }
-        .welcome-box { 
-            background: #fff; 
-            padding: 40px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            text-align: center; 
-            max-width: 400px; 
+        .nav-logo { color: #4CAF50; font-size: 24px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 17px; font-weight: 300; transition: color 0.3s; }
+        .nav-links a:hover { color: #4CAF50; }
+        .nav-profile { color: #fff; font-size: 24px; cursor: pointer; }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 70px);
+            text-align: center;
+            padding: 20px;
         }
-        h1 { color: limegreen; margin-top: 0; }
-        p { color: black; margin-bottom: 30px; line-height: 1.5; }
-        .btn { 
-            background-color: limegreen; 
-            color: white; 
-            padding: 12px 24px; 
-            text-decoration: none; 
-            border-radius: 4px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            transition: background 0.3s; 
+        .hero h1 {
+            color: #121212;
+            font-size: 48px;
+            margin-bottom: 20px;
         }
-        .btn:hover { background-color: #02669c; }
+        .hero p {
+            color: #555;
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .botoes-container {
+            display: flex;
+            gap: 20px;
+        }
+        .btn {
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        
+        .btn-green { background-color: #4CAF50; color: white; }
+        .btn-green:hover { background-color: #388E3C; }
+        
+        .btn-yellow { background-color: #FFC107; color: #333; }
+        .btn-yellow:hover { background-color: #FFA000; }
     </style>
 </head>
 <body>
-    <div class="welcome-box">
-        <h1>Folha de Renda</h1>
-        <p>Controle sua renda mensal, registre seus gastos e alcance suas metas de economia com facilidade.</p>
+
+    <nav class="navbar">
+        <!-- Nome do Projeto Atualizado -->
+        <div class="nav-logo">Folha de Renda</div>
+        <div class="nav-links">
+            <a href="#">Funcionalidades</a>
+            <a href="#">Sobre o Projeto</a>
+        </div>
+        <div class="nav-profile">👤</div>
+    </nav>
+
+    <div class="hero">
+        <h1>Bem-vindo ao Folha de Renda</h1>
+        <p>Assuma o controle da sua vida financeira. Registre seus gastos, acompanhe sua renda mensal e defina metas de economia para o seu futuro de forma simples e rápida.</p>
         
-        <a href="login.jsp" class="btn">Acessar minha conta</a>
+        <div class="botoes-container">
+            <!-- Direciona para as páginas corretas -->
+            <a href="login.jsp" class="btn btn-green">Fazer Login</a>
+            <a href="cadastro.jsp" class="btn btn-yellow">Criar Conta</a>
+        </div>
     </div>
+
 </body>
 </html>

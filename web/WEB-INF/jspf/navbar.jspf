@@ -1,0 +1,16 @@
+<%-- Barra superior das páginas internas. Antes de incluir, defina: Usuario usuario e String paginaAtiva. --%>
+<nav class="navbar">
+    <a class="nav-logo" href="PainelController">Folha de Renda</a>
+    <div class="nav-links">
+        <a href="PainelController"<%= "painel".equals(paginaAtiva) ? " class=\"ativo\"" : "" %>>Painel</a>
+        <a href="AmizadeController"<%= "amigos".equals(paginaAtiva) ? " class=\"ativo\"" : "" %>>Amigos</a>
+        <a href="GrupoController"<%= "grupos".equals(paginaAtiva) ? " class=\"ativo\"" : "" %>>Grupos</a>
+    </div>
+    <div class="nav-user">
+        <span><%= util.Html.esc(usuario.getNome()) %></span>
+        <form action="LogoutController" method="POST">
+            <%= util.Csrf.campo(session) %>
+            <button type="submit" class="btn-sair">Sair</button>
+        </form>
+    </div>
+</nav>

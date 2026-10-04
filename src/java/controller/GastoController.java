@@ -1,54 +1,47 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.Gasto;
 import model.Usuario;
 import negocio.GastoNegocio;
+import negocio.NegocioException;
+import util.Flash;
 
 @WebServlet(name = "GastoController", urlPatterns = {"/GastoController"})
 public class GastoController extends HttpServlet {
 
+    private static final Logger LOG = Logger.getLogger(GastoController.class.getName());
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
-        HttpSession sessao = request.getSession();
-        Usuario usuario = (Usuario) sessao.getAttribute("usuarioLogado");
-        
-        if (usuario != null) 
-        {
-            String descricao = request.getParameter("descricao").trim();
-            double valor = Double.parseDouble(request.getParameter("valor"));
-            Date dataGasto = Date.valueOf(request.getParameter("dataGasto")); 
-            
-            Gasto gasto = new Gasto();
-            gasto.setIdUsuario(usuario.getId());
-            gasto.setDescricao(descricao);
-            gasto.setValor(valor);
-            gasto.setDataGasto(dataGasto);
-            
-            GastoNegocio negocio = new GastoNegocio();
-            
-            try 
-            {
-                negocio.registrarNovoGasto(usuario, gasto);
-                response.sendRedirect("menu.jsp?sucesso=true");
-            } 
-            catch (Exception e) 
-            {
-                request.setAttribute("mensagemErro", e.getMessage());
-                request.getRequestDispatcher("menu.jsp").forward(request, response);
-            }
-        } 
-        else 
-        {
-            response.sendRedirect("login.jsp");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Usuario usuario = Web.usuarioLogado(request);
+        if (usuario == null) {
+            Web.redirecionar(request, response, "login.jsp");
+            return;
         }
+
+        try {
+            Gasto gasto = new Gasto();
+            gasto.setDescricao(Web.texto(request, "descricao"));
+            gasto.setValor(Web.valor(request, "valor", "gasto"));
+            gasto.setDataGasto(Web.data(request, "dataGasto"));
+
+            new GastoNegocio().registrarNovoGasto(usuario, gasto);
+            Flash.sucesso(request, "Gasto registrado. O saldo foi atualizado.");
+        } catch (NegocioException e) {
+            Flash.erro(request, e.getMessage());
+        } catch (RuntimeException e) {
+            LOG.log(Level.SEVERE, "Falha inesperada ao registrar gasto", e);
+            Flash.erro(request, "Erro inesperado. Tente novamente.");
+        }
+        Web.redirecionar(request, response, "PainelController");
     }
 }

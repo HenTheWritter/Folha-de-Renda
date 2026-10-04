@@ -8,16 +8,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.MetaEconomia;
 import model.Usuario;
-import negocio.MetaEconomiaNegocio;
+import negocio.GastoNegocio;
 import negocio.NegocioException;
 import util.Flash;
 
-@WebServlet(name = "MetaController", urlPatterns = {"/MetaController"})
-public class MetaController extends HttpServlet {
+/** Adiciona renda (entrada de dinheiro) ao saldo do usuário. */
+@WebServlet(name = "RendaController", urlPatterns = {"/RendaController"})
+public class RendaController extends HttpServlet {
 
-    private static final Logger LOG = Logger.getLogger(MetaController.class.getName());
+    private static final Logger LOG = Logger.getLogger(RendaController.class.getName());
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -29,18 +29,12 @@ public class MetaController extends HttpServlet {
         }
 
         try {
-            MetaEconomia meta = new MetaEconomia();
-            meta.setIdUsuario(usuario.getId());
-            meta.setDescricao(Web.texto(request, "descricao"));
-            meta.setValorObjetivo(Web.valor(request, "valorObjetivo", "objetivo"));
-            meta.setValorPoupado(Web.valor(request, "valorPoupado", "valor já poupado"));
-
-            new MetaEconomiaNegocio().salvarMeta(meta);
-            Flash.sucesso(request, "Meta criada com sucesso.");
+            new GastoNegocio().adicionarRenda(usuario, Web.valor(request, "valorRenda", "renda"));
+            Flash.sucesso(request, "Renda adicionada. O saldo foi atualizado.");
         } catch (NegocioException e) {
             Flash.erro(request, e.getMessage());
         } catch (RuntimeException e) {
-            LOG.log(Level.SEVERE, "Falha inesperada ao salvar meta", e);
+            LOG.log(Level.SEVERE, "Falha inesperada ao adicionar renda", e);
             Flash.erro(request, "Erro inesperado. Tente novamente.");
         }
         Web.redirecionar(request, response, "PainelController");

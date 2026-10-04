@@ -1,0 +1,7 @@
+<%-- Mensagens de sucesso/erro (já escapadas). Vêm do Flash/controller. --%>
+<% if (request.getAttribute("mensagemSucesso") != null) { %>
+    <div class="alerta ok" role="status"><%= util.Html.esc(request.getAttribute("mensagemSucesso")) %></div>
+<% } %>
+<% if (request.getAttribute("mensagemErro") != null) { %>
+    <div class="alerta erro" role="alert"><%= util.Html.esc(request.getAttribute("mensagemErro")) %></div>
+<% } %>

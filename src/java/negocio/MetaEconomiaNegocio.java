@@ -1,23 +1,35 @@
 package negocio;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Logger;
 import model.MetaEconomia;
+import model.Usuario;
 import persistencia.MetaEconomiaP;
 
 public class MetaEconomiaNegocio {
 
-    public void salvarMeta(MetaEconomia meta) throws Exception 
-    {
-        if (meta.getDescricao() == null || meta.getDescricao().trim().isEmpty()) {
-            throw new Exception("A descrição da meta não pode estar vazia.");
-        }
-        if (meta.getValorObjetivo() <= 0) {
-            throw new Exception("O valor objetivo deve ser maior que zero.");
-        }
-        if (meta.getValorPoupado() < 0) {
-            throw new Exception("O valor poupado não pode ser negativo.");
-        }
+    private static final Logger LOG = Logger.getLogger(MetaEconomiaNegocio.class.getName());
 
-        MetaEconomiaP persistencia = new MetaEconomiaP();
-        persistencia.salvar(meta);
+    private final MetaEconomiaP metaP = new MetaEconomiaP();
+
+    public void salvarMeta(MetaEconomia meta) throws NegocioException {
+        meta.setDescricao(Regras.texto(meta.getDescricao(), "a descrição da meta", true));
+        meta.setValorObjetivo(Regras.dinheiro(meta.getValorObjetivo(), "objetivo", false));
+        meta.setValorPoupado(Regras.dinheiro(meta.getValorPoupado(), "valor poupado", true));
+
+        try {
+            metaP.salvar(meta);
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
+    }
+
+    public List<MetaEconomia> listar(Usuario usuario) throws NegocioException {
+        try {
+            return metaP.listarPorUsuario(usuario.getId());
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
     }
 }

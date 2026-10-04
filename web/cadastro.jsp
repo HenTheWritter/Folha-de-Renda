@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login - Folha de Renda</title>
+    <title>Criar Conta - Folha de Renda</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #ffffff; }
@@ -26,12 +26,7 @@
         .nav-links a:hover { color: #4CAF50; }
         .nav-profile { color: #fff; font-size: 24px; cursor: pointer; }
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 70px);
-        }
+        .container { display: flex; justify-content: center; align-items: center; height: calc(100vh - 70px); }
 
         .form-box {
             background-color: #f9f9f9;
@@ -40,23 +35,22 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             width: 100%;
             max-width: 400px;
-            border-top: 4px solid #4CAF50; /* Detalhe verde no topo da caixa */
+            border-top: 4px solid #FFC107;
         }
         .form-box h2 { color: #333; margin-bottom: 25px; font-size: 22px; text-align: center; }
         
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; color: #555; font-weight: bold; font-size: 14px; }
         .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        .form-group input:focus { outline: none; border-color: #4CAF50; }
+        .form-group input:focus { outline: none; border-color: #FFC107; }
 
-        .btn-green { width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; background-color: #4CAF50; color: white; transition: background 0.3s; margin-top: 10px; }
-        .btn-green:hover { background-color: #388E3C; }
+        .btn-yellow { width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; background-color: #FFC107; color: #333; transition: background 0.3s; margin-top: 10px; }
+        .btn-yellow:hover { background-color: #FFA000; }
 
         .alert-error { background-color: #ffebee; color: #c62828; border: 1px solid #ef9a9a; padding: 12px; border-radius: 4px; margin-bottom: 20px; text-align: center; font-size: 14px; }
-        .alert-success { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; padding: 12px; border-radius: 4px; margin-bottom: 20px; text-align: center; font-size: 14px; }
         
         .link-rodape { text-align: center; margin-top: 20px; font-size: 14px; color: #555; }
-        .link-rodape a { color: #FFC107; font-weight: bold; text-decoration: none; }
+        .link-rodape a { color: #4CAF50; font-weight: bold; text-decoration: none; }
         .link-rodape a:hover { text-decoration: underline; }
     </style>
 </head>
@@ -73,33 +67,31 @@
 
     <div class="container">
         <div class="form-box">
-            <h2>Entrar na conta</h2>
+            <h2>Criar conta</h2>
             
-            <% if (request.getAttribute("mensagemErro") != null) { %>
-                <div class="alert-error" role="alert"><%= Html.esc(request.getAttribute("mensagemErro")) %></div>
-            <% } %>
-            <% if (request.getParameter("sucesso") != null) { %>
-                <div class="alert-success" role="status">Conta criada com sucesso! Faça login.</div>
-            <% } %>
-            <% if (request.getParameter("sessao") != null) { %>
-                <div class="alert-error" role="alert">Sua sessão expirou. Tente novamente.</div>
+            <% if (request.getAttribute("erroRegisto") != null) { %>
+                <div class="alert-error" role="alert"><%= Html.esc(request.getAttribute("erroRegisto")) %></div>
             <% } %>
 
-            <form action="UsuarioController" method="POST">
+            <form action="CadastroController" method="POST">
                 <%= Csrf.campo(session) %>
                 <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" name="nome" required maxlength="100" placeholder="Como quer ser chamado" value="<%= Html.esc(request.getAttribute("nomeForm")) %>">
+                </div>
+                <div class="form-group">
                     <label>E-mail</label>
-                    <input type="email" name="email" required maxlength="100" placeholder="Seu e-mail" value="<%= Html.esc(request.getAttribute("emailForm")) %>">
+                    <input type="email" name="email" required maxlength="100" placeholder="Um e-mail válido" value="<%= Html.esc(request.getAttribute("emailForm")) %>">
                 </div>
                 <div class="form-group">
                     <label>Senha</label>
-                    <input type="password" name="senha" required placeholder="Sua senha">
+                    <input type="password" name="senha" required minlength="8" maxlength="128" placeholder="Mínimo de 8 caracteres">
                 </div>
-                <button type="submit" class="btn-green">Entrar</button>
+                <button type="submit" class="btn-yellow">Criar conta</button>
             </form>
 
             <div class="link-rodape">
-                Ainda não tem conta? <a href="cadastro.jsp">Criar conta</a>
+                Já tem uma conta? <a href="login.jsp">Entrar</a>
             </div>
         </div>
     </div>
