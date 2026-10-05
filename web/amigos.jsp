@@ -23,7 +23,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Amigos - Folha de Renda</title>
-    <link rel="stylesheet" href="css/estilo.css">
+    <style>
+        /* Estilo escuro com identidade visual Folha de Renda (Verde e Amarelo) */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #121212; color: #e0e0e0; }
+
+        /* Navbar e botões de navegação (Aplicado ao seu navbar.jspf) */
+        .navbar { background-color: #0a0a0a; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 0 30px; min-height: 70px; flex-wrap: wrap; border-bottom: 3px solid transparent; border-image: linear-gradient(90deg, #4CAF50, #FFC107) 1; }
+        .nav-logo { font-size: 24px; font-weight: bold; letter-spacing: 2px; text-decoration: none; color: #4CAF50; text-shadow: 0 0 8px rgba(76, 175, 80, 0.3); }
+        .nav-links { display: flex; gap: 30px; flex-wrap: wrap; }
+        .nav-links a { color: #ccc; text-decoration: none; font-size: 17px; font-weight: 300; padding: 6px 0; border-bottom: 2px solid transparent; transition: color 0.3s, border-color 0.3s; }
+        .nav-links a:hover { color: #fff; }
+        .nav-links a.ativo { color: #fff; border-bottom-color: #4CAF50; } 
+        .nav-user { display: flex; align-items: center; gap: 14px; color: #ccc; font-size: 15px; }
+        .nav-user form { margin: 0; }
+        .btn-sair { background: transparent; color: #ccc; border: 1px solid #444; border-radius: 4px; padding: 7px 14px; font-size: 14px; cursor: pointer; width: auto; transition: 0.3s; }
+        .btn-sair:hover { border-color: #FFC107; color: #FFC107; }
+        a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid #FFC107; outline-offset: 2px; }
+
+        /* Estrutura da página interna */
+        .pagina { max-width: 1100px; margin: 0 auto; padding: 24px 20px 50px; }
+        h1 { font-size: 24px; margin-bottom: 18px; color: #fff; font-weight: 400; }
+        
+        .grade { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+        .card { background: #1a1a1a; padding: 22px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); flex: 1; min-width: 280px; border-top: 2px solid #4CAF50; }
+        .card.amarelo { border-top-color: #FFC107; }
+        .card h2 { font-size: 18px; margin-bottom: 14px; color: #fff; font-weight: 400; }
+        label { display: block; font-size: 14px; font-weight: bold; color: #aaa; margin-bottom: 4px; }
+
+        /* Inputs escuros com foco verde */
+        input[type=email] { width: 100%; padding: 10px; margin-bottom: 14px; border: 1px solid #333; border-radius: 4px; background-color: #0f0f0f; color: #fff; font-size: 14px; transition: border-color 0.3s, box-shadow 0.3s; }
+        input:focus { outline: none; border-color: #4CAF50; box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); }
+
+        /* Botões com efeito neon sutil */
+        .btn { width: 100%; padding: 11px; border: none; border-radius: 4px; font-size: 15px; font-weight: bold; cursor: pointer; background: #4CAF50; color: #fff; transition: background 0.3s, box-shadow 0.3s; }
+        .btn:hover { background: #388E3C; box-shadow: 0 0 8px rgba(76, 175, 80, 0.4); }
+
+        /* Alertas aplicados ao mensagens.jspf */
+        .alerta { padding: 12px 14px; border-radius: 4px; margin-bottom: 18px; font-size: 14px; }
+        .alerta.erro { background: rgba(220, 38, 38, 0.1); color: #ef4444; border: 1px solid #dc2626; }
+        .alerta.ok { background: rgba(22, 163, 74, 0.1); color: #4ade80; border: 1px solid #16a34a; }
+
+        /* Listagem de Amigos */
+        .vazio { color: #555; font-size: 14px; padding: 10px 0; font-style: italic; }
+        .lista-simples { list-style: none; }
+        .lista-simples li { padding: 12px 0; border-bottom: 1px solid #333; font-size: 14px; color: #fff; }
+        .lista-simples small { display: block; color: #888; margin-top: 4px; }
+
+        @media (max-width: 600px) { .navbar { padding: 10px 16px; } .nav-links { gap: 18px; } }
+    </style>
 </head>
 <body>
     <%@include file="/WEB-INF/jspf/navbar.jspf" %>
@@ -33,6 +81,7 @@
         <%@include file="/WEB-INF/jspf/mensagens.jspf" %>
 
         <div class="grade">
+            <!-- Coluna para adicionar amigo -->
             <section class="card">
                 <h2>Adicionar amigo</h2>
                 <form action="AmizadeController" method="POST">

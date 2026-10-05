@@ -9,49 +9,63 @@
     <title>Criar Conta - Folha de Renda</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #ffffff; }
+        body { background-color: #121212; color: #e0e0e0; }
 
         .navbar {
-            background-color: #121212; 
+            background-color: #0a0a0a; 
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 30px;
             height: 70px;
-            border-bottom: 4px solid #4CAF50;
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, #4CAF50, #FFC107) 1;
         }
-        .nav-logo { color: #4CAF50; font-size: 24px; font-weight: bold; letter-spacing: 2px; }
+        .nav-logo { color: #4CAF50; font-size: 24px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 8px rgba(76, 175, 80, 0.3); }
         .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 17px; font-weight: 300; transition: color 0.3s; }
-        .nav-links a:hover { color: #4CAF50; }
-        .nav-profile { color: #fff; font-size: 24px; cursor: pointer; }
+        .nav-links a { color: #ccc; text-decoration: none; font-size: 17px; font-weight: 300; transition: color 0.3s; }
+        .nav-links a:hover { color: #fff; }
 
-        .container { display: flex; justify-content: center; align-items: center; height: calc(100vh - 70px); }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 70px);
+            padding: 20px;
+        }
 
         .form-box {
-            background-color: #f9f9f9;
+            background-color: #1a1a1a;
             padding: 40px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             width: 100%;
             max-width: 400px;
-            border-top: 4px solid #FFC107;
+            border-top: 2px solid #FFC107;
         }
-        .form-box h2 { color: #333; margin-bottom: 25px; font-size: 22px; text-align: center; }
+        .form-box h2 { color: #fff; margin-bottom: 25px; font-size: 22px; text-align: center; font-weight: 400; }
         
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #555; font-weight: bold; font-size: 14px; }
-        .form-group input { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        .form-group input:focus { outline: none; border-color: #FFC107; }
-
-        .btn-yellow { width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; background-color: #FFC107; color: #333; transition: background 0.3s; margin-top: 10px; }
-        .btn-yellow:hover { background-color: #FFA000; }
-
-        .alert-error { background-color: #ffebee; color: #c62828; border: 1px solid #ef9a9a; padding: 12px; border-radius: 4px; margin-bottom: 20px; text-align: center; font-size: 14px; }
+        .form-group label { display: block; margin-bottom: 5px; color: #aaa; font-weight: bold; font-size: 14px; }
         
-        .link-rodape { text-align: center; margin-top: 20px; font-size: 14px; color: #555; }
-        .link-rodape a { color: #4CAF50; font-weight: bold; text-decoration: none; }
-        .link-rodape a:hover { text-decoration: underline; }
+        .form-group input { 
+            width: 100%; padding: 12px; border: 1px solid #333; border-radius: 4px; 
+            background-color: #0f0f0f; color: #fff; font-size: 14px; transition: border-color 0.3s, box-shadow 0.3s; 
+        }
+        .form-group input:focus { outline: none; border-color: #FFC107; box-shadow: 0 0 5px rgba(255, 193, 7, 0.3); }
+
+        .btn-yellow { 
+            width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 16px; 
+            font-weight: bold; cursor: pointer; background-color: #FFC107; color: #121212; 
+            transition: background 0.3s, box-shadow 0.3s; margin-top: 10px; 
+        }
+        .btn-yellow:hover { background-color: #FFA000; box-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
+
+        .alert-error { background: rgba(220, 38, 38, 0.1); color: #ef4444; border: 1px solid #dc2626; padding: 12px; border-radius: 4px; margin-bottom: 20px; text-align: center; font-size: 14px; }
+        
+        .link-rodape { text-align: center; margin-top: 20px; font-size: 14px; color: #aaa; }
+        .link-rodape a { color: #4CAF50; font-weight: bold; text-decoration: none; transition: text-shadow 0.3s; }
+        .link-rodape a:hover { text-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
     </style>
 </head>
 <body>
@@ -60,9 +74,7 @@
         <div class="nav-logo">Folha de Renda</div>
         <div class="nav-links">
             <a href="index.html">Início</a>
-            <a href="#">Funcionalidades</a>
         </div>
-        <div class="nav-profile">👤</div>
     </nav>
 
     <div class="container">

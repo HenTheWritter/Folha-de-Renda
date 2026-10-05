@@ -5,23 +5,23 @@
     <title>Folha de Renda - Início</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #ffffff; }
+        body { background-color: #121212; color: #e0e0e0; }
 
-        /* Barra superior escura baseada na referência visual */
         .navbar {
-            background-color: #121212; 
+            background-color: #0a0a0a; 
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 30px;
             height: 70px;
-            border-bottom: 4px solid #4CAF50; /* Detalhe verde */
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, #4CAF50, #FFC107) 1;
         }
-        .nav-logo { color: #4CAF50; font-size: 24px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
+        .nav-logo { color: #4CAF50; font-size: 24px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 8px rgba(76, 175, 80, 0.3); }
         .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 17px; font-weight: 300; transition: color 0.3s; }
-        .nav-links a:hover { color: #4CAF50; }
-        .nav-profile { color: #fff; font-size: 24px; cursor: pointer; }
+        .nav-links a { color: #ccc; text-decoration: none; font-size: 17px; font-weight: 300; transition: color 0.3s; }
+        .nav-links a:hover { color: #fff; }
+        .nav-profile { color: #ccc; font-size: 24px; cursor: pointer; }
 
         .hero {
             display: flex;
@@ -33,12 +33,13 @@
             padding: 20px;
         }
         .hero h1 {
-            color: #121212;
+            color: #fff;
             font-size: 48px;
             margin-bottom: 20px;
+            font-weight: 400;
         }
         .hero p {
-            color: #555;
+            color: #aaa;
             font-size: 18px;
             max-width: 600px;
             margin-bottom: 40px;
@@ -55,27 +56,21 @@
             border-radius: 4px;
             font-size: 16px;
             font-weight: bold;
-            transition: background 0.3s, transform 0.2s;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
         }
         .btn:hover { transform: translateY(-2px); }
         
         .btn-green { background-color: #4CAF50; color: white; }
-        .btn-green:hover { background-color: #388E3C; }
+        .btn-green:hover { background-color: #388E3C; box-shadow: 0 0 8px rgba(76, 175, 80, 0.4); }
         
-        .btn-yellow { background-color: #FFC107; color: #333; }
-        .btn-yellow:hover { background-color: #FFA000; }
+        .btn-yellow { background-color: #FFC107; color: #121212; }
+        .btn-yellow:hover { background-color: #FFA000; box-shadow: 0 0 8px rgba(255, 193, 7, 0.4); }
     </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <!-- Nome do Projeto Atualizado -->
         <div class="nav-logo">Folha de Renda</div>
-        <div class="nav-links">
-            <a href="#">Funcionalidades</a>
-            <a href="#">Sobre o Projeto</a>
-        </div>
-        <div class="nav-profile">👤</div>
     </nav>
 
     <div class="hero">
@@ -83,7 +78,6 @@
         <p>Assuma o controle da sua vida financeira. Registre seus gastos, acompanhe sua renda mensal e defina metas de economia para o seu futuro de forma simples e rápida.</p>
         
         <div class="botoes-container">
-            <!-- Direciona para as páginas corretas -->
             <a href="login.jsp" class="btn btn-green">Fazer Login</a>
             <a href="cadastro.jsp" class="btn btn-yellow">Criar Conta</a>
         </div>

@@ -32,4 +32,14 @@ public class MetaEconomiaNegocio {
             throw Regras.erroBanco(LOG, e);
         }
     }
+    
+    public void atualizar(model.MetaEconomia meta) throws Exception {
+        if (meta.getValorPoupado().compareTo(java.math.BigDecimal.ZERO) < 0 || 
+            meta.getValorObjetivo().compareTo(java.math.BigDecimal.ZERO) <= 0) {
+            throw new Exception("Os valores informados não são válidos.");
+        }
+        
+        persistencia.MetaEconomiaP persistencia = new persistencia.MetaEconomiaP();
+        persistencia.atualizar(meta);
+    }
 }

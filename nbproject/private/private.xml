@@ -3,10 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/CadastroController.java</file>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/persistencia/UsuarioP.java</file>
-            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/GastoController.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/negocio/MetaEconomiaNegocio.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/amigos.jsp</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/grupos.jsp</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/cadastro.jsp</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/menu.jsp</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/index.html</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/editar_meta.jsp</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/web/erro.jsp</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/model/MetaEconomia.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/EditarMetaController.java</file>
             <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/controller/MetaController.java</file>
+            <file>file:/C:/Users/carlo/OneDrive/Documentos/NetBeansProjects/Folha%20de%20Renda/src/java/persistencia/MetaEconomiaP.java</file>
         </group>
     </open-files>
 </project-private>

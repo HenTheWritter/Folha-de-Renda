@@ -47,4 +47,18 @@ public class MetaEconomiaP {
         }
         return lista;
     }
+    
+    public void atualizar(MetaEconomia meta) throws SQLException {
+        String sql = "UPDATE meta_economia SET valorPoupado = ?, valorObjetivo = ? WHERE id = ? AND id_usuario = ?";
+        
+        try (Connection con = ConexaoDB.conectar();
+             PreparedStatement stm = con.prepareStatement(sql)) {
+            stm.setBigDecimal(1, meta.getValorPoupado());
+            stm.setBigDecimal(2, meta.getValorObjetivo());
+            stm.setInt(3, meta.getId());
+            stm.setInt(4, meta.getIdUsuario());
+            
+            stm.executeUpdate();
+        }
+    }
 }
