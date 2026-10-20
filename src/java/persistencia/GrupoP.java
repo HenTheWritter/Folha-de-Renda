@@ -11,13 +11,7 @@ import util.ConexaoDB;
 
 public class GrupoP {
 
-    /**
-     * Cria o grupo e já vincula o criador como membro, numa única transação
-     * (antes o grupo era criado sem nenhum membro).
-     *
-     * @return id do grupo criado
-     */
-    public int criarComMembro(Grupo grupo, int idCriador) throws SQLException {
+    public int criarComMembro(Grupo grupo, int idCriador, String[] amigosIds) throws SQLException {
         String insGrupo = "INSERT INTO grupo (nome, descricao) VALUES (?, ?) RETURNING id";
 
         try (Connection con = ConexaoDB.conectar()) {
@@ -32,7 +26,16 @@ public class GrupoP {
                         idGrupo = rs.getInt(1);
                     }
                 }
+                
                 vincularUsuario(con, idGrupo, idCriador);
+                
+                if (amigosIds != null && amigosIds.length > 0) {
+                    for (String amigoIdStr : amigosIds) {
+                        int idAmigo = Integer.parseInt(amigoIdStr);
+                        vincularUsuario(con, idGrupo, idAmigo);
+                    }
+                }
+                
                 con.commit();
                 return idGrupo;
             } catch (SQLException | RuntimeException e) {
@@ -77,5 +80,16 @@ public class GrupoP {
             }
         }
         return lista;
+    }
+    
+    public void excluir(int idGrupo, int idUsuario) throws SQLException {
+        String sql = "DELETE FROM grupo WHERE id = ? AND EXISTS (SELECT 1 FROM grupo_usuario WHERE id_grupo = ? AND id_usuario = ?)";
+        try (Connection con = ConexaoDB.conectar();
+             PreparedStatement stm = con.prepareStatement(sql)) {
+            stm.setInt(1, idGrupo);
+            stm.setInt(2, idGrupo);
+            stm.setInt(3, idUsuario);
+            stm.executeUpdate();
+        }
     }
 }

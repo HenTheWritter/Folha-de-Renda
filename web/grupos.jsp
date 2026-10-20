@@ -10,12 +10,16 @@
         response.sendRedirect("login.jsp");
         return;
     }
-    if (request.getAttribute("grupos") == null) {
+    
+    if (request.getAttribute("grupos") == null || request.getAttribute("amigos") == null) {
         response.sendRedirect("GrupoController");
         return;
     }
+    
     @SuppressWarnings("unchecked")
     List<Grupo> grupos = (List<Grupo>) request.getAttribute("grupos");
+    @SuppressWarnings("unchecked")
+    List<Usuario> amigos = (List<Usuario>) request.getAttribute("amigos");
     String paginaAtiva = "grupos";
 %>
 <!DOCTYPE html>
@@ -52,6 +56,14 @@
         input[type=text] { width: 100%; padding: 10px; margin-bottom: 14px; border: 1px solid #333; border-radius: 4px; background-color: #0f0f0f; color: #fff; font-size: 14px; transition: border-color 0.3s, box-shadow 0.3s; }
         input:focus { outline: none; border-color: #4CAF50; box-shadow: 0 0 5px rgba(76, 175, 80, 0.3); }
 
+        /* Nova Caixa de Checkboxes para Amigos */
+        .caixa-amigos { background-color: #0f0f0f; border: 1px solid #333; border-radius: 4px; padding: 12px; max-height: 150px; overflow-y: auto; margin-bottom: 14px; }
+        .caixa-amigos::-webkit-scrollbar { width: 8px; }
+        .caixa-amigos::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+        .checkbox-amigo { display: flex; align-items: center; gap: 10px; color: #ccc; font-size: 14px; margin-bottom: 10px; cursor: pointer; font-weight: normal; }
+        .checkbox-amigo:last-child { margin-bottom: 0; }
+        .checkbox-amigo input { width: 16px; height: 16px; margin: 0; accent-color: #4CAF50; cursor: pointer; }
+
         .btn { width: 100%; padding: 11px; border: none; border-radius: 4px; font-size: 15px; font-weight: bold; cursor: pointer; background: #4CAF50; color: #fff; transition: background 0.3s, box-shadow 0.3s; }
         .btn:hover { background: #388E3C; box-shadow: 0 0 8px rgba(76, 175, 80, 0.4); }
 
@@ -75,7 +87,62 @@
         <%@include file="/WEB-INF/jspf/mensagens.jspf" %>
 
         <div class="grade">
-            <!-- Coluna para criar grupo -->
             <section class="card">
                 <h2>Criar grupo</h2>
-                <form action="
+                <form action="GrupoController" method="POST">
+                    <%= Csrf.campo(session) %>
+                    <label for="nome">Nome do grupo</label>
+                    <input type="text" id="nome" name="nome" required maxlength="100" placeholder="Ex.: Viagem de julho">
+                    
+                    <label for="descricao">Descrição (opcional)</label>
+                    <input type="text" id="descricao" name="descricao" maxlength="100" placeholder="Para que serve este grupo?">
+                    
+                    <label>Selecione os participantes</label>
+                    <div class="caixa-amigos">
+                        <% if (amigos.isEmpty()) { %>
+                            <small class="vazio" style="padding:0;">Você precisa adicionar amigos primeiro na aba "Amigos".</small>
+                        <% } else { 
+                            for (Usuario amigo : amigos) { %>
+                                <label class="checkbox-amigo">
+                                    <input type="checkbox" name="amigosIds" value="<%= amigo.getId() %>">
+                                    <%= Html.esc(amigo.getNome()) %>
+                                </label>
+                        <%  } 
+                           } %>
+                    </div>
+
+                    <button type="submit" class="btn">Criar grupo</button>
+                </form>
+            </section>
+
+            <section class="card amarelo">
+                <h2>Seus grupos</h2>
+                <% if (grupos.isEmpty()) { %>
+                    <p class="vazio">Você ainda não participa de nenhum grupo.</p>
+                <% } else { %>
+                    <ul class="lista-simples">
+                        <% for (Grupo g : grupos) { %>
+                            <li>
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    <a href="DetalheGrupoController?idGrupo=<%= g.getId() %>" style="color: #4CAF50; text-decoration: none; font-weight: bold; font-size: 16px;">
+                                        <%= Html.esc(g.getNome()) %> 
+                                        <span style="font-size: 12px; color: #aaa; margin-left: 8px;">(Ver Painel)</span>
+                                    </a>
+                                    <form action="ExcluirGrupoController" method="POST" style="margin: 0;" onsubmit="return confirm('Ao apagar o grupo, TODAS as metas partilhadas serão perdidas para todos os amigos. Tem a certeza?');">
+                                        <%= Csrf.campo(session) %>
+                                        <input type="hidden" name="idGrupo" value="<%= g.getId() %>">
+                                        <button type="submit" class="btn-acao" style="border-color: #ef4444; color: #ef4444; background: transparent;">Apagar</button>
+                                    </form>
+                                </div>
+                                <% if (g.getDescricao() != null && !g.getDescricao().isEmpty()) { %>
+                                    <small style="margin-top: 6px;"><%= Html.esc(g.getDescricao()) %></small>
+                                <% } %>
+                            </li>
+                        <% } %>
+                    </ul>
+                <% } %>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

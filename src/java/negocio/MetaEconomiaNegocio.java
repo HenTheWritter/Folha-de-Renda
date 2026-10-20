@@ -42,4 +42,20 @@ public class MetaEconomiaNegocio {
         persistencia.MetaEconomiaP persistencia = new persistencia.MetaEconomiaP();
         persistencia.atualizar(meta);
     }
+    
+    public List<MetaEconomia> buscarPorDescricao(Usuario usuario, String termo) throws NegocioException {
+        try {
+            return metaP.buscarPorDescricao(usuario.getId(), termo);
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
+    }
+    
+    public void excluir(int id, int idUsuario) throws NegocioException {
+        try {
+            metaP.excluir(id, idUsuario);
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
+    }
 }

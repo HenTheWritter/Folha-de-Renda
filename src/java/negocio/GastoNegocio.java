@@ -52,4 +52,21 @@ public class GastoNegocio {
             throw Regras.erroBanco(LOG, e);
         }
     }
+    
+    public List<Gasto> buscarPorDescricao(Usuario usuario, String termo) throws NegocioException {
+        try {
+            return gastoP.buscarPorDescricao(usuario.getId(), termo);
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
+    }
+    
+    public void excluir(int id, Usuario usuario) throws NegocioException {
+        try {
+            gastoP.excluirComEstorno(id, usuario.getId());
+            usuario.setQuantiaUsuario(usuarioP.buscarSaldo(usuario.getId()));
+        } catch (SQLException e) {
+            throw Regras.erroBanco(LOG, e);
+        }
+    }
 }

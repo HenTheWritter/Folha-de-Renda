@@ -17,7 +17,6 @@ import negocio.NegocioException;
 import negocio.UsuarioNegocio;
 import util.Flash;
 
-/** Carrega os dados do painel (saldo, últimos gastos, metas) e mostra o menu.jsp. */
 @WebServlet(name = "PainelController", urlPatterns = {"/PainelController"})
 public class PainelController extends HttpServlet {
 
@@ -33,11 +32,19 @@ public class PainelController extends HttpServlet {
         Flash.paraRequest(request);
         List<Gasto> gastos = new ArrayList<>();
         List<MetaEconomia> metas = new ArrayList<>();
+        String busca = request.getParameter("busca");
 
         try {
             new UsuarioNegocio().atualizarSaldo(usuario);
-            gastos = new GastoNegocio().listarRecentes(usuario, 10);
-            metas = new MetaEconomiaNegocio().listar(usuario);
+            
+            if (busca != null && !busca.trim().isEmpty()) {
+                String termo = busca.trim();
+                gastos = new GastoNegocio().buscarPorDescricao(usuario, termo);
+                metas = new MetaEconomiaNegocio().buscarPorDescricao(usuario, termo);
+            } else {
+                gastos = new GastoNegocio().listarRecentes(usuario, 10);
+                metas = new MetaEconomiaNegocio().listar(usuario);
+            }
         } catch (NegocioException e) {
             request.setAttribute("mensagemErro", e.getMessage());
         }

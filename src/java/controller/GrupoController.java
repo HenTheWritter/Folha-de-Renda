@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Grupo;
 import model.Usuario;
 import negocio.GrupoNegocio;
+import negocio.AmizadeNegocio; 
 import negocio.NegocioException;
 import util.Flash;
 
@@ -21,7 +22,6 @@ public class GrupoController extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(GrupoController.class.getName());
 
-    /** Mostra os grupos do usuário (grupos.jsp). */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,16 +33,25 @@ public class GrupoController extends HttpServlet {
 
         Flash.paraRequest(request);
         List<Grupo> grupos = new ArrayList<>();
+        List<Usuario> amigos = new ArrayList<>();
+        
         try {
             grupos = new GrupoNegocio().listar(usuario);
+            
+            amigos = new AmizadeNegocio().listar(usuario); 
+            
         } catch (NegocioException e) {
             request.setAttribute("mensagemErro", e.getMessage());
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Erro ao listar grupos ou amigos", e);
         }
+        
         request.setAttribute("grupos", grupos);
+        request.setAttribute("amigos", amigos); // Envia os amigos para a página
         request.getRequestDispatcher("grupos.jsp").forward(request, response);
     }
 
-    /** Cria um grupo; o usuário logado entra como primeiro membro. */
+    /** Cria um grupo; o usuário logado e os amigos marcados entram no grupo. */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -57,8 +66,11 @@ public class GrupoController extends HttpServlet {
             grupo.setNome(Web.texto(request, "nome"));
             grupo.setDescricao(Web.texto(request, "descricao"));
 
-            new GrupoNegocio().criarGrupo(grupo, usuario);
-            Flash.sucesso(request, "Grupo criado com sucesso.");
+            String[] amigosIds = request.getParameterValues("amigosIds");
+
+            new GrupoNegocio().criarGrupoComMembros(grupo, usuario, amigosIds);
+            
+            Flash.sucesso(request, "Grupo criado com sucesso!");
         } catch (NegocioException e) {
             Flash.erro(request, e.getMessage());
         } catch (RuntimeException e) {

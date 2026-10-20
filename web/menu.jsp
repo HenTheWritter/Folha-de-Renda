@@ -140,6 +140,16 @@
                 </form>
             </section>
         </div>
+                    
+        <form action="PainelController" method="GET" style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <input type="text" name="busca" placeholder="Buscar por descrição em gastos e metas..." 
+                   value="<%= request.getParameter("busca") != null ? Html.esc(request.getParameter("busca")) : "" %>"
+                   style="flex: 1; margin-bottom: 0;">
+            <button type="submit" class="btn" style="width: auto; padding: 0 20px; margin-top: 0;">Buscar</button>
+            <% if (request.getParameter("busca") != null && !request.getParameter("busca").trim().isEmpty()) { %>
+                <a href="PainelController" class="btn-sair" style="display: inline-flex; align-items: center; text-decoration: none;">Limpar</a>
+            <% } %>
+        </form>
 
         <div class="grade">
             <section class="card amarelo">
@@ -148,17 +158,31 @@
                     <p class="vazio">Nenhum gasto registrado ainda. Use o formulário acima para começar.</p>
                 <% } else { %>
                     <table>
-                        <thead><tr><th>Data</th><th>Descrição</th><th class="valor">Valor</th></tr></thead>
-                        <tbody>
-                        <% for (Gasto g : gastos) { %>
-                            <tr>
-                                <td><%= Formato.data(g.getDataGasto()) %></td>
-                                <td><%= Html.esc(g.getDescricao()) %></td>
-                                <td class="valor"><%= Formato.moeda(g.getValor()) %></td>
-                            </tr>
-                        <% } %>
-                        </tbody>
-                    </table>
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Descrição</th>
+            <th class="valor">Valor</th>
+            <th></th> <!-- Coluna vazia para o botão excluir -->
+        </tr>
+    </thead>
+    <tbody>
+    <% for (Gasto g : gastos) { %>
+        <tr>
+            <td><%= Formato.data(g.getDataGasto()) %></td>
+            <td><%= Html.esc(g.getDescricao()) %></td>
+            <td class="valor"><%= Formato.moeda(g.getValor()) %></td>
+            <td style="text-align: right; width: 1%;">
+                <form action="ExcluirGastoController" method="POST" style="margin: 0;" onsubmit="return confirm('Deseja excluir este gasto? O valor retornará ao seu saldo.');">
+                    <%= Csrf.campo(session) %>
+                    <input type="hidden" name="id" value="<%= g.getId() %>">
+                    <button type="submit" class="btn-acao" style="border-color: #ef4444; color: #ef4444; padding: 2px 8px; font-size: 10px;">X</button>
+                </form>
+            </td>
+        </tr>
+    <% } %>
+    </tbody>
+</table>
                 <% } %>
             </section>
 
@@ -173,8 +197,14 @@
                             <div class="meta-topo">
                                 <div class="meta-titulo-container">
                                     <strong><%= Html.esc(m.getDescricao()) %></strong>
-                                    <!-- Botão que direciona para a página de edição da meta -->
                                     <a href="editar_meta.jsp?id=<%= m.getId() %>" class="btn-acao">Editar</a>
+
+                                    <!-- Formulário/Botão para excluir a meta individual -->
+                                    <form action="ExcluirMetaController" method="POST" style="display:inline;" onsubmit="return confirm('Deseja realmente excluir esta meta?');">
+                                        <%= Csrf.campo(session) %>
+                                        <input type="hidden" name="id" value="<%= m.getId() %>">
+                                        <button type="submit" class="btn-acao" style="border-color: #ef4444; color: #ef4444; background: transparent;">Excluir</button>
+                                    </form>
                                 </div>
                                 <span><%= pct %>%</span>
                             </div>

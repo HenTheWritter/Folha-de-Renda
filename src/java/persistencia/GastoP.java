@@ -11,13 +11,6 @@ import util.ConexaoDB;
 
 public class GastoP {
 
-    /**
-     * Debita o saldo e grava o gasto na MESMA transação.
-     * O débito só acontece se houver saldo suficiente (checado pelo próprio UPDATE),
-     * então duas requisições simultâneas não conseguem gastar o mesmo dinheiro.
-     *
-     * @return false se o saldo era insuficiente (nada é gravado)
-     */
     public boolean registrarComDebito(Gasto gasto) throws SQLException {
         String debito = "UPDATE usuario SET quantiaUsuario = quantiaUsuario - ? "
                       + "WHERE id = ? AND quantiaUsuario >= ?";
@@ -73,5 +66,70 @@ public class GastoP {
             }
         }
         return lista;
+    }
+    
+    public List<Gasto> buscarPorDescricao(int idUsuario, String termo) throws SQLException {
+        String sql = "SELECT id, id_usuario, descricao, valor, data_gasto FROM gasto "
+                   + "WHERE id_usuario = ? AND descricao ILIKE ? ORDER BY data_gasto DESC, id DESC";
+        List<Gasto> lista = new ArrayList<>();
+
+        try (Connection con = ConexaoDB.conectar();
+             PreparedStatement stm = con.prepareStatement(sql)) {
+            stm.setInt(1, idUsuario);
+            stm.setString(2, "%" + termo + "%");
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Gasto g = new Gasto();
+                    g.setId(rs.getInt("id"));
+                    g.setIdUsuario(rs.getInt("id_usuario"));
+                    g.setDescricao(rs.getString("descricao"));
+                    g.setValor(rs.getBigDecimal("valor"));
+                    g.setDataGasto(rs.getDate("data_gasto"));
+                    lista.add(g);
+                }
+            }
+        }
+        return lista;
+    }
+    
+    public void excluirComEstorno(int idGasto, int idUsuario) throws SQLException {
+        String selGasto = "SELECT valor FROM gasto WHERE id = ? AND id_usuario = ?";
+        String upUsuario = "UPDATE usuario SET quantiaUsuario = quantiaUsuario + ? WHERE id = ?";
+        String delGasto = "DELETE FROM gasto WHERE id = ?";
+
+        try (Connection con = ConexaoDB.conectar()) {
+            con.setAutoCommit(false);
+            try {
+                java.math.BigDecimal valorEstorno = java.math.BigDecimal.ZERO;
+                
+                try (PreparedStatement stmSel = con.prepareStatement(selGasto)) {
+                    stmSel.setInt(1, idGasto);
+                    stmSel.setInt(2, idUsuario);
+                    try (ResultSet rs = stmSel.executeQuery()) {
+                        if (rs.next()) {
+                            valorEstorno = rs.getBigDecimal("valor");
+                        } else {
+                            throw new SQLException("Gasto não encontrado.");
+                        }
+                    }
+                }
+
+                try (PreparedStatement stmUp = con.prepareStatement(upUsuario)) {
+                    stmUp.setBigDecimal(1, valorEstorno);
+                    stmUp.setInt(2, idUsuario);
+                    stmUp.executeUpdate();
+                }
+
+                try (PreparedStatement stmDel = con.prepareStatement(delGasto)) {
+                    stmDel.setInt(1, idGasto);
+                    stmDel.executeUpdate();
+                }
+
+                con.commit();
+            } catch (SQLException | RuntimeException e) {
+                con.rollback();
+                throw e;
+            }
+        }
     }
 }
